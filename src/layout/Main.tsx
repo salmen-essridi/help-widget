@@ -1,6 +1,6 @@
 import { h } from 'preact';
 import style from './main.css';
-import ContactForm from '../routes/ContactForm';
+
 import ThankYou from '../routes/ThankYou';
 import { useContext, useState } from 'preact/hooks';
 import { ConfigContext, GlobalsContext } from '../AppContext';
@@ -8,6 +8,7 @@ import clsx from 'clsx';
 import TitleBar from '../components/TitleBar';
 import Faq from '../routes/Faq';
 import { Router, RouteComponent } from './Router';
+import SubscriptionPopUp from '../routes/SubscriptionPopUp';
 
 const Main = () => {
     const config = useContext(ConfigContext);
@@ -22,7 +23,7 @@ const Main = () => {
                 return config.text.faqTitle ?? 'FAQ';
             case '/':
             default:
-                return config.text.formTitle ?? 'Contact Form';
+                return config.text.formTitle ?? ' TTTTT';
         }
     };
 
@@ -37,7 +38,7 @@ const Main = () => {
                     <Router
                         onChange={(r) => setTitle(getTitle(r))}
                         routes={{
-                            '/': <RouteComponent component={ContactForm} />,
+                            '/': <RouteComponent component={SubscriptionPopUp} />,
                             '/thankyou': <RouteComponent component={ThankYou} />,
                             '/faq': <RouteComponent component={Faq} />
                         }} />

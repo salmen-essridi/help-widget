@@ -45,4 +45,5 @@ export interface WidgetApi {
 export interface Globals {
     widgetOpen: boolean;
     setWidgetOpen: (open: boolean) => void;
+    widgetVars: any;
 }

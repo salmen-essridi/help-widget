@@ -1,6 +1,6 @@
 import { Configurations } from './models';
 
-type MethodNames = 'init' | 'event';
+type MethodNames = 'init' | 'event' | 'show' |  'hide' | 'refresh';
 export const DEFAULT_NAME = '_hw';
 
 /**
@@ -76,6 +76,7 @@ export default (
                 break;
             // TODO: here you can handle additional async interactions
             // with the widget from page (e.q. `_hw('refreshStats')`)
+ 
             default:
                 console.warn(`Unsupported method [${methodName}]`, item[1]);
         }
@@ -87,7 +88,7 @@ export default (
         switch (method) {
             case 'event': {
                 targetElement?.dispatchEvent(
-                    new CustomEvent('widget-event', { detail: { name: args?.[0] } }));
+                    new CustomEvent('widget-event', { detail: { name: args?.[0] , vars : args?.[1] } }));
                 break;
             }
             default:

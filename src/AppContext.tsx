@@ -5,7 +5,7 @@ import { ApiClient } from './services/apiClient';
 
 export const ConfigContext = createContext<AppConfigurations>({} as AppConfigurations);
 export const ServiceContext = createContext<WidgetApi | undefined>(undefined);
-export const GlobalsContext = createContext<Globals>({ widgetOpen: false, setWidgetOpen: (o) => undefined });
+export const GlobalsContext = createContext<Globals>({widgetVars : {} ,  widgetOpen: false, setWidgetOpen: (o) => undefined });
 
 interface Props {
     children: ComponentChildren;
@@ -18,15 +18,23 @@ export const AppContext = ({ children, config, element }: Props) => {
         debug: config.debug
     }));
 
-    const [widgetOpen, setWidgetOpen] = useState(!config.minimized);
+    const [widgetOpen, setWidgetOpen] = useState(false);
+
+    const [widgetVars, setWidgetVars] = useState({});
     useEffect(() => {
         element?.addEventListener('widget-event', (e: CustomEvent<{ name?: string }>) => {
+                console.log('Received event', e.detail);
             switch (e.detail.name) {
+
                 case 'open':
-                    setWidgetOpen(true);
+                  //  setWidgetOpen(true);
                     break;
                 case 'close':
                     setWidgetOpen(false);
+                    break;
+                case 'show':
+                    setWidgetVars({ ...e.detail.vars});
+                    setWidgetOpen(true);
                     break;
             }
         });
@@ -35,7 +43,7 @@ export const AppContext = ({ children, config, element }: Props) => {
     return (
         <ConfigContext.Provider value={config}>
             <ServiceContext.Provider value={services.current}>
-                <GlobalsContext.Provider value={{ widgetOpen, setWidgetOpen }}>
+                <GlobalsContext.Provider value={{ widgetOpen, setWidgetOpen , widgetVars}}>
                     {children}
                 </GlobalsContext.Provider>
             </ServiceContext.Provider>
