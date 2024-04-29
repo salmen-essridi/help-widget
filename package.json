@@ -5,7 +5,9 @@
     "build-release": "cross-env NODE_OPTIONS=--openssl-legacy-provider webpack --config webpack.config.js --env.prod --display-modules",
     "start": "cross-env NODE_OPTIONS=--openssl-legacy-provider  webpack-dev-server --open",
     "lint": "tslint --project tsconfig.json",
-    "test": "jest"
+    "test": "jest",
+    "prepare": "npm run snyk-protect",
+    "snyk-protect": "snyk-protect"
   },
   "author": "Jenya Y.",
   "license": "MIT",
@@ -41,7 +43,8 @@
     "clsx": "^1.1.0",
     "cn": "^0.1.1",
     "cross-env": "^7.0.3",
-    "preact": "^10.2.1"
+    "preact": "^10.2.1",
+    "@snyk/protect": "latest"
   },
   "jest": {
     "moduleFileExtensions": [
@@ -56,5 +59,6 @@
     },
     "coverageDirectory": "../coverage",
     "testEnvironment": "jsdom"
-  }
+  },
+  "snyk": true
 }
